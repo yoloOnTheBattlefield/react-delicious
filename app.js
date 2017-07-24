@@ -4,15 +4,6 @@ const bodyParser = require('body-parser')
 const path = require('path');
 const routes = require('./routes/index');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://dang:dang@ds019654.mlab.com:19654/delicious', {
-  useMongoClient: true
-});
-mongoose.Promise = global.Promise;
-mongoose.connection.on('error', (err) => console.log(err));
-
-
-
 //Serve static files from the react app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
