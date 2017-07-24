@@ -1,13 +1,15 @@
 {
   "name": "react-delicious",
   "version": "1.0.0",
-  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/yoloOnTheBattlefield/react-delicious.git",
+  "author": "Cristi Florea <cristianflorea1110@yahoo.com>",
+  "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
-    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
-}
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
   },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
+  "dependencies": {
+    "express": "^4.15.3"
   }
 }
