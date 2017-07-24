@@ -9,10 +9,10 @@ export default class extends React.Component{
   }
 
   componentDidMount() {
-    fetch('/api/stores')
+    fetch('/api')
       .then((data) => data.json())
-      .then(data => this.setState({
-        message: data.message
+      .then(({ message }) => this.setState({
+        message
       }))
   }
 

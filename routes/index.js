@@ -6,4 +6,11 @@ router.get('/api', (req, res) => {
   console.log('Running on index route!')
 });
 
+/*
+router.get('/api/home', (req, res) => {
+  res.json({message: 'Running on home route!'});
+  console.log('Running on home route!')
+});
+*/
+
 module.exports = router;

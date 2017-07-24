@@ -19,8 +19,8 @@ class App extends Component {
   componentDidMount() {
     fetch('/api')
       .then((data) => data.json())
-      .then(data => this.setState({
-        message: data.message
+      .then(({ message }) => this.setState({
+        message
       }))
   }
 
