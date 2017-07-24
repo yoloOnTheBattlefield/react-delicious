@@ -1,19 +1,22 @@
-const express = require('express');
-const path = require('path');
+const mongoose = require('mongoose');
 
-const app = express();
+//Import the env variables
+require('dotenv').config({ path: 'variables.env' });
 
-//Serve static files from the react app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-//Put all api endpoint under '/api'
-app.get('/api', (req, res) => {
-  res.json({message: 'Welcome to Express'})
+//Connecting the database
+mongoose.connect(process.env.DATABASE, {
+  useMongoClient: true
 });
+//Tell mongo to use the global promises
+mongoose.Promise = global.Promise;
+//Error handling
+mongoose.connection.on('error', (err) => console.log(err));
+
 
 //Preparing the listening process
-
+const app = require('./app');
 //Setting the port, if it's in development run it on htttp://localhost:5000
-const port = process.env.PORT || 5000;
-app.listen(port);
-console.log(`The api runs on port ${port}`);
+app.set('port', process.env.PORT || 5000);
+const server = app.listen(app.get('port'), () => {
+  console.log(`Express running on port ${server.address().port}`)
+});

@@ -1,16 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 router.get('/api', (req, res) => {
-  res.json({message: 'Welcome to Express and React'});
-  console.log('Running on index route!')
+  res.json({ message: 'Welcome to Express' })
 });
-
-/*
-router.get('/api/home', (req, res) => {
-  res.json({message: 'Running on home route!'});
-  console.log('Running on home route!')
-});
-*/
 
 module.exports = router;
