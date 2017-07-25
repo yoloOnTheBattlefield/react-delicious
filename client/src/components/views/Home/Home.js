@@ -8,7 +8,7 @@ export default class extends React.Component {
     }
   }
   componentDidMount(){
-    fetch('/api')
+    fetch('/api/home')
     .then((data) => data.json())
     .then(({ message }) => this.setState({
       message

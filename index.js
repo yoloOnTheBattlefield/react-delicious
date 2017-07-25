@@ -10,7 +10,10 @@ mongoose.connect(process.env.DATABASE, {
 //Tell mongo to use the global promises
 mongoose.Promise = global.Promise;
 //Error handling
-mongoose.connection.on('error', (err) => console.log(err));
+mongoose.connection.on('error', (err) => console.log(err.message));
+
+//Import the models
+require('./models/Store');
 
 
 //Preparing the listening process

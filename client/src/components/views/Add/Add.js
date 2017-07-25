@@ -1,27 +1,96 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Form } from 'semantic-ui-react';
+import { addStore, createStore } from './actions';
 
-export default class extends React.Component{
+class Add extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      message: null
+      name: null,
+      description: null,
+      tags: []
     }
+  }
+
+  _handleNameChange = (e) => {
+    const name = e.target.value;
+    this.setState({
+      name
+    });
+  }
+
+  _handleDescriptionChange = (e) => {
+    const description = e.target.value;
+    this.setState({ description });
+  }
+
+  _handleTagsChange = (e, data) => {
+    this.setState({ tags: [...this.state.tags, data.value] });
+  }
+
+  _handleSubmit = () => {
+    this.props.createStore(this.state);
+    this.setState({
+      name: null,
+      description: null,
+      tags: []
+    });
   }
 
   componentDidMount() {
-    fetch('/api')
-      .then((data) => data.json())
-      .then(data => this.setState({
-        message: data.message
-      }))
+    this.props.addStore();
   }
 
   render() {
-    if(!this.state.message){
-
-    }
+    const tags = ['Wifi', 'Open Late', 'Family Friendly', 'Vegetarian', 'Off License'];
     return (
-      <h1>{this.state.message}</h1>
+      <div>
+        <h2>{this.props.title}</h2>
+      <Form onSubmit={this._handleSubmit}>
+        <Form.Group>
+          <Form.Input
+            required
+            onChange={this._handleNameChange}
+            label='Place Name'
+            placeholder='Place Name'
+            value={this.state.name || ''}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.TextArea
+            onChange={this._handleDescriptionChange}
+            label='Description'
+            placeholder='Tell us more about this place...'
+            value={this.state.description || ''}
+          />
+        </Form.Group>
+        <Form.Group>
+          {
+            tags.map((tag, key) => (
+                <Form.Checkbox
+                  onChange={this._handleTagsChange}
+                  key={key}
+                  value={tag}
+                  label={tag}
+                />
+              )
+            )
+          }
+        </Form.Group>
+        <Form.Button content='Submit place' />
+      </Form>
+    </div>
     )
   }
 }
+
+const mapStateToProps = ({ addStore }) => ({
+  title: addStore.title
+});
+const mapDispatchToProps = (dispatch) => ({
+  addStore: () => dispatch(addStore()),
+  createStore: (data) => dispatch(createStore(data))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Add);

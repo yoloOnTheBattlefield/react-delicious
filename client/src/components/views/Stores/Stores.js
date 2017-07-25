@@ -1,27 +1,40 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getStores } from './actions';
 
-export default class extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      message: null
-    }
-  }
+import StoreCard from './components/StoreCard';
 
+class Stores extends React.Component{
   componentDidMount() {
-    fetch('/api')
-      .then((data) => data.json())
-      .then(({ message }) => this.setState({
-        message
-      }))
+    this.props.getStores()
   }
 
   render() {
-    if(!this.state.message){
-
+    if(!this.props.stores){
+      return <div>Loading stores...</div>
     }
     return (
-      <h1>{this.state.message}</h1>
+      <div>
+        <h1>{this.props.title}</h1>
+        <ul style={{display: 'flex', flexWrap: 'wrap'}}>
+          {
+            this.props.stores.map((store, key) => {
+              return <StoreCard key={key} store={store}/>
+            })
+          }
+        </ul>
+      </div>
     )
   }
 }
+
+const mapStateToProps = ({ stores }) => ({
+  title: stores.title,
+  stores: stores.stores
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  getStores: () => dispatch(getStores())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stores)
