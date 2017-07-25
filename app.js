@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Put all api endpoints under '/api'
-app.use('/', routes);
+app.use('/api', routes);
 
 // app.get('*', (req, res) => {
 //   app.use(express.static(path.join(__dirname, 'client/build')));

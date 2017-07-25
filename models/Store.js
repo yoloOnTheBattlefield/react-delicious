@@ -3,17 +3,17 @@ mongoose.Promise = global.Promise;
 const slug = require('slugs');
 
 const storeSchema = new mongoose.Schema({
-  // name: {
-  //   type: String,
-  //   trim: true,
-  //   required: 'Please enter the store name'
-  // },
-  // slug: String,
-  // description: {
-  //   type: String,
-  //   trim: true
-  // },
-  // tags: [String]
+  name: {
+    type: String,
+    trim: true,
+    required: 'Please enter the store name'
+  },
+  slug: String,
+  description: {
+    type: String,
+    trim: true
+  },
+  tags: [String]
 });
 
 storeSchema.pre('save', function(next){

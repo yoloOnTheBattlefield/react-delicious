@@ -1,5 +1,5 @@
 import axios from 'axios';
-const ROOT_URL = '/api/add';
+const ROOT_URL = '/add';
 
 export const addStore = () => {
   const request = axios.get(ROOT_URL);

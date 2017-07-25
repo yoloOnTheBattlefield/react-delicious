@@ -1,5 +1,5 @@
 import axios from 'axios';
-const ROOT_URL = '/api/stores'
+const ROOT_URL = '/stores'
 
 export const getStores = () => {
   const request = axios.get(ROOT_URL);

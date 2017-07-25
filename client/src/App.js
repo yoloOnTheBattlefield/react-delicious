@@ -9,25 +9,7 @@ import Add from './components/views/Add/Add';
 import Map from './components/views/Map/Map';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      message: null
-    }
-  }
-
-  componentDidMount() {
-    fetch('/api')
-      .then((data) => data.json())
-      .then(({ message }) => this.setState({
-        message
-      }))
-  }
-
   render() {
-    if(!this.state.message){
-
-    }
     return (
       <div className="App">
         <Router>

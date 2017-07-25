@@ -1,10 +1,14 @@
+
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
 import {
   Navbar,
   NavbarInner,
-  Home
+  LinksContainer,
+  Home,
+  Item,
+  AuthContainer
 } from './Navbar.styles'
 
 export default () => {
@@ -12,11 +16,27 @@ export default () => {
     <Navbar>
       <NavbarInner>
         <Home to='/'>Delicious</Home>
-        <Link to='/stores'>Stores</Link>
-        <Link to='/tags'>Tags</Link>
-        <Link to='/top'>Top</Link>
-        <Link to='/add'>Add</Link>
-        <Link to='/map'>Map</Link>
+        <LinksContainer>
+          <Link to='/stores'>
+            <Item>Stores</Item>
+          </Link>
+          <Link to='/tags'>
+            <Item>Tags</Item>
+          </Link>
+          <Link to='/top'>
+            <Item>Top</Item>
+          </Link>
+          <Link to='/add'>
+            <Item>Add</Item>
+          </Link>
+          <Link to='/map'>
+            <Item>Map</Item>
+          </Link>
+        </LinksContainer>
+        <AuthContainer>
+          <Item to='/signup'>Sign Up</Item>
+          <Item to='/login'>Login</Item>
+        </AuthContainer>
       </NavbarInner>
     </Navbar>
   )
