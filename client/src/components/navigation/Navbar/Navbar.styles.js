@@ -6,19 +6,6 @@ export const Navbar = styled.nav`
   height: 55px;
   padding-bottom: 1px;
   position: relative;
-  &:after{
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(to right, #54DEFD, #49C6E5);
-    bottom: -5px;
-    z-index: -1;
-    transition: 0.2s ease-in-out;
-  }
-  &:hover:after{
-    transform: translatey(-100%);
-  }
 `;
 
 export const NavbarInner = styled.div`
@@ -67,9 +54,6 @@ export const Item = styled.div`
   }
   &:hover:after{
     transform: translatey(0%);
-  }
-  &:hover{
-    color: white;
   }
 `;
 

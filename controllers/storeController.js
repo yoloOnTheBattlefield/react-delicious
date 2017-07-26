@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 exports.homePage = (req, res) => {
-  res.json({ message: 'You are on the home page!'});
+  res.json({ title: 'Home'});
 }
 
 exports.addStore = (req, res) => {
