@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 //Put all api endpoints under '/api'
 app.use('/api', routes);
 
-// app.get('*', (req, res) => {
-//   app.use(express.static(path.join(__dirname, 'client/build/index.html')));
-// });
+app.get('*', (req, res) => {
+  app.use(express.static(path.join(__dirname+'client/build/index.html')));
+});
 
 module.exports = app;
