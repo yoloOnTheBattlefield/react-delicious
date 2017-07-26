@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use('/api', routes);
 
 // app.get('*', (req, res) => {
-//   app.use(express.static(path.join(__dirname, 'client/build')));
+//   app.use(express.static(path.join(__dirname, 'client/build/index.html')));
 // });
 
 module.exports = app;

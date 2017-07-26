@@ -6,7 +6,6 @@ export const Navbar = styled.nav`
   height: 55px;
   padding-bottom: 1px;
   position: relative;
-  background: #111;
   &:after{
     content: '';
     position: absolute;
