@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getStores } from './actions';
 
-import StoreCard from './components/StoreCard';
+// import StoreCard from './components/StoreCard';
+import Card from './components/Card';
 
 class Stores extends React.Component{
   componentDidMount() {
@@ -16,10 +17,10 @@ class Stores extends React.Component{
     return (
       <div>
         <h1>{this.props.title}</h1>
-        <ul style={{display: 'flex', flexWrap: 'wrap'}}>
+        <ul style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
           {
             this.props.stores.map((store, key) => {
-              return <StoreCard key={key} store={store}/>
+              return <Card key={key} store={store}/>
             })
           }
         </ul>
