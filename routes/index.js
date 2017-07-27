@@ -7,5 +7,7 @@ router.get('/', storeController.homePage);
 router.get('/stores', storeController.getStores);
 router.get('/add', storeController.addStore);
 router.post('/add', storeController.createStore);
+router.post('/add/:id', storeController.updateStore);
+router.get('/stores/:id/edit', storeController.editStore);
 
 module.exports = router;

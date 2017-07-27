@@ -13,17 +13,41 @@ const storeSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  tags: [String]
+  tags: [String],
+  created: {
+    type: Date,
+    default: Date.now()
+  },
+  location: {
+    type: {
+      type: String,
+      default: 'Point'
+    },
+    coordinates: [{
+      type: Number,
+      required: 'You must supply coordinates'
+    }],
+    address: {
+      type: String,
+      required: 'You must supply an address'
+    }
+  }
 });
 
-storeSchema.pre('save', function(next){
+storeSchema.pre('save', async function(next){
   if(!this.isModified('name')) {
-    next(); //skip it
-    return; //stop it
+    next();
+    return;
   }
   this.slug = slug(this.name);
+  const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+  const storesWithSlugs = await this.constructor.find({
+    slug: slugRegEx
+  });
+  if(storesWithSlugs.length){
+    this.slug = `${this.slug}-${storesWithSlugs.length + 1}`;
+  }
   next();
-  // TODO: check if the slugs is unique so they won't overlap
 });
 
 

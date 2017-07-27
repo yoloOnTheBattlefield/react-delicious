@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getStores } from './actions';
-
-// import StoreCard from './components/StoreCard';
+import { Loader, Header } from 'semantic-ui-react';
 import Card from './components/Card';
 
 class Stores extends React.Component{
@@ -12,11 +11,11 @@ class Stores extends React.Component{
 
   render() {
     if(!this.props.stores){
-      return <div>Loading stores...</div>
+      return <Loader active inline='centered' />
     }
     return (
       <div>
-        <h1>{this.props.title}</h1>
+        <Header as='h1' textAlign={'center'}>{this.props.title}</Header>
         <ul style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
           {
             this.props.stores.map((store, key) => {
