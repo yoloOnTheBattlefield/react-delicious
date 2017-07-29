@@ -7,10 +7,12 @@ const ROOT_URL = '/add';
 */
 
 export const addStore = () => {
-  const request = axios.get(ROOT_URL);
-  return {
-    type: 'ADD_STORE',
-    payload: request
+  return dispatch => {
+    return axios.get(ROOT_URL)
+      .then((data) =>  dispatch({
+        type: 'ADD_STORE',
+        payload: data
+      }))
   }
 }
 
@@ -19,10 +21,10 @@ export const addStore = () => {
 */
 
 export const createStore = (data) => {
-  console.log('create store ', data)
+  console.log(data)
   return dispatch => {
     return axios.post(ROOT_URL, data)
-    .then(({ data }) => dispatch(push(`/store/${data.store.slug}`)))
+    .then(({ data }) => dispatch(push(`/stores/${data.store._id}`)))
   }
 }
 
@@ -32,11 +34,9 @@ export const createStore = (data) => {
 */
 
 export const updateStore = (data, id) => {
-  console.log(data)
-  console.log('update ', data)
   return dispatch => {
     return axios.post(`${ROOT_URL}/${id}`, data)
-    .then(({ data }) => dispatch(push(`/store/${data.store.slug}`)))
+    .then(({ data }) => dispatch(push(`/stores/${data.store._id}`)))
   }
 }
 

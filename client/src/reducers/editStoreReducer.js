@@ -1,14 +1,11 @@
-const intialState = {
-  store: null
-};
+const intialState = {};
 
 export default (state=intialState, action) => {
   switch (action.type) {
     case 'GET_STORE_TO_EDIT':
-      return {
-        ...state,
-        store: action.payload.data.store
-      }
+      const store = action.payload.data.store;
+
+      return {...state, store};
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/navigation/Navbar/Navbar';
 import Home from './components/views/Home/Home';
 import Stores from './components/views/Stores/Stores';
+import Store from './components/views/Store/Store';
 import EditStores from './components/views/Add/EditStores';
 import Tags from './components/views/Tags/Tags';
 import Top from './components/views/Top/Top';
@@ -17,6 +18,7 @@ class App extends Component {
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path='/stores' exact component={Stores} />
+          <Route path='/stores/:id' exact component={Store} />
           <Route path='/stores/:id/edit' component={EditStores} />
           <Route path='/tags' component={Tags} />
           <Route path='/top' component={Top} />

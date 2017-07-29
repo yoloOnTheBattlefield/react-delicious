@@ -11,8 +11,8 @@ exports.addStore = (req, res) => {
 
 exports.createStore = async (req, res) => {
   const store = new Store(req.body);
-  console.log(req.body)
   await store.save();
+  console.log(req.body)
   res.json({ store });
 }
 
@@ -26,7 +26,7 @@ exports.getStores = async (req, res) => {
 
 exports.editStore = async (req, res) => {
   const id = req.params.id;
-  const store = await Store.findOne({_id: id});
+  const store = await Store.findOne({ _id: id });
   res.json({
     title: 'Edit Store',
     store
@@ -36,12 +36,16 @@ exports.editStore = async (req, res) => {
 exports.updateStore = async (req,res) => {
   req.body.location.type = 'Point';
   const id = req.params.id;
-  console.log(req.body)
   const store = await Store.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
     runValidators: true,
   }).exec();
-  res.json({
-    store
-  })
+  res.json({ store });
+}
+
+exports.getStore = async (req, res) => {
+  const id = req.params.id;
+  const store = await Store.findOne({ _id: id });
+  console.log(store)
+  res.json({ store });
 }

@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getStoreToEdit, updateStore } from './actions';
-import { Container, Grid, Loader, Header } from 'semantic-ui-react';
+import { Container, Loader, Header } from 'semantic-ui-react';
 import Form from './Form';
 
 class EditStores extends React.Component{
   handleSubmit = (data) => {
-    console.log(data)
     const id = this.props.match.params.id;
     this.props.updateStore(data, id);
-    console.log('submited form data ', data)
   }
   componentDidMount(){
     const path = this.props.location.pathname;

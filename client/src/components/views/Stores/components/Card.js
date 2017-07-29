@@ -73,12 +73,16 @@ export default ({ store }) => {
   if(!store){
     return null;
   }
+
+  const storePhoto = store.photo;
+  const altPhoto = 'https://images.unsplash.com/photo-1492574037190-8b88b600ca50?dpr=2&auto=format&fit=crop&w=1080&h=899&q=80&cs=tinysrgb&crop='
+
   return (
     <Card>
-      <CardImageBlur src={'https://images.unsplash.com/photo-1492574037190-8b88b600ca50?dpr=2&auto=format&fit=crop&w=1080&h=899&q=80&cs=tinysrgb&crop='} />
+      <CardImageBlur src={storePhoto || altPhoto} />
       <Wrapper>
-        <Link to={`/store/${store.slug}`}>
-          <CardImage src={'https://images.unsplash.com/photo-1492574037190-8b88b600ca50?dpr=2&auto=format&fit=crop&w=1080&h=899&q=80&cs=tinysrgb&crop='} />
+        <Link to={`/stores/${store._id}`}>
+          <CardImage src={storePhoto || altPhoto} />
         </Link>
       </Wrapper>
       <CardDescription>

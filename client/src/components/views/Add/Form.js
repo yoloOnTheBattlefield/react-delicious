@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Loader } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import PlacesSuggestions from './PlacesSuggestions';
+import UploadImage from './UploadImage';
 
 export default class extends React.Component{
   constructor(props){
@@ -8,6 +9,7 @@ export default class extends React.Component{
     this.state = {
       name: '',
       description: '',
+      photo: '',
       location: {
         address: '',
         coordinates: []
@@ -16,17 +18,17 @@ export default class extends React.Component{
     }
   }
 
-  _handleNameChange = (e) => {
+  handleNameChange = (e) => {
     const name = e.target.value;
     this.setState({ name });
   }
 
-  _handleDescriptionChange = (e) => {
+  handleDescriptionChange = (e) => {
     const description = e.target.value;
     this.setState({ description });
   }
 
-  _handleAdressChange = (place) => {
+  handleAdressChange = (place) => {
     const lat = place.geometry.location.lat();
     const lng = place.geometry.location.lng();
     const address = place.formatted_address;
@@ -38,7 +40,8 @@ export default class extends React.Component{
     })
   }
 
-  _handleTagsChange = (e, data) => {
+  handleTagsChange = (e, data) => {
+    //removes the tags
     if(this.state.tags.includes(data.value)){
       return this.setState({
         tags: this.state.tags.filter((tag) => {
@@ -46,15 +49,51 @@ export default class extends React.Component{
         })
       })
     }
+    //adds the tags witout mutation
     this.setState({ tags: [...this.state.tags, data.value] });
   }
 
-  _handleSubmit = () => {
+  handleImageUpload = (photo) => this.setState({ photo: photo.url })
+
+  renderImageUpload = () => (
+    <UploadImage
+      handleImageUpload={this.handleImageUpload}
+    />
+  )
+
+  renderSuggestions = () => {
+    //this renders in the get(/stores/:id/edit)
+    if(this.state.location && this.state.location.address){
+      return (
+        <PlacesSuggestions
+          handleAdressChange={this.handleAdressChange}
+          address={this.state.location.address}
+        />
+      )
+    }
+    //this renders in the get(/add)
+    if(!this.props.store){
+      return (
+        <PlacesSuggestions
+          handleAdressChange={this.handleAdressChange}
+          address={this.state.location.address}
+        />
+      )
+    }
+  }
+
+  handleSubmit = (e) => {
     const data = this.state;
+    if(!this.state.image){
+      e.preventDefault();
+    }
     this.props.handleSubmit(data);
+    console.log(data)
+    //reset the state after submiting the form
     this.setState({
       name: '',
       description: '',
+      photo: '',
       location: {
         address: '',
         coordinates: []
@@ -63,46 +102,24 @@ export default class extends React.Component{
     });
   }
 
-  renderSuggestions = () => {
-    if(this.state.location && this.state.location.address){
-      return (
-        <PlacesSuggestions
-          handleAdressChange={this._handleAdressChange}
-          address={this.state.location.address}
-        />
-      )
-    }
-    if(!this.props.store){
-      return (
-        <PlacesSuggestions
-          handleAdressChange={this._handleAdressChange}
-          address={this.state.location.address}
-        />
-      )
-    }
-  }
   componentDidMount(){
+    //if it is in the get(/add) return
     if(!this.props.store){
-      return this.setState({
-        name: '',
-        description: '',
-        location: {
-          address: '',
-          coordinates: []
-        },
-        tags: []
-      })
+      return;
     }
-    const { name, description, location, tags } = this.props.store;
+    //else initialize the state with the data from props
+    console.log(this.props.store)
+    const { name, description, photo, location, tags } = this.props.store;
     this.setState({
       name,
       description,
+      photo,
       location: {
         address: location.address,
         coordinates: location.coordinates,
       },
       tags
-    })
+    });
   }
 
   render() {
@@ -118,12 +135,13 @@ export default class extends React.Component{
           alignItems: 'center'
         }}
         size={'huge'}
-        onSubmit={this._handleSubmit}
+        onSubmit={this.handleSubmit}
+        encType="multipart/form-data"
       >
         <Form.Group>
           <Form.Input
             required
-            onChange={this._handleNameChange}
+            onChange={this.handleNameChange}
             label='Place Name'
             placeholder='Place Name'
             value={this.state.name}
@@ -131,11 +149,16 @@ export default class extends React.Component{
         </Form.Group>
         <Form.Group>
           <Form.TextArea
-            onChange={this._handleDescriptionChange}
+            onChange={this.handleDescriptionChange}
             label='Description'
             placeholder='Tell us more about this place...'
             value={this.state.description}
           />
+        </Form.Group>
+        <Form.Group>
+          {
+            this.renderImageUpload()
+          }
         </Form.Group>
         <Form.Group>
           {
@@ -146,7 +169,7 @@ export default class extends React.Component{
           {
             choices.map((choice, key) => (
                 <Form.Checkbox
-                  onClick={this._handleTagsChange}
+                  onClick={this.handleTagsChange}
                   key={key}
                   value={choice}
                   label={choice}
@@ -156,7 +179,11 @@ export default class extends React.Component{
             )
           }
         </Form.Group>
-        <Form.Button size={'huge'} color={'green'} content='Submit place' />
+        <Form.Button
+          size={'huge'}
+          color={'green'}
+          content='Submit place'
+        />
       </Form>
     );
   }

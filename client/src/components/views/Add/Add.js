@@ -6,7 +6,6 @@ import Form from './Form';
 
 class Add extends React.Component{
   handleSubmit = (data) => {
-    console.log(data)
     this.props.createStore(data);
   }
 
@@ -17,7 +16,9 @@ class Add extends React.Component{
   render() {
     return (
       <div>
-        <Header as='h2' textAlign={'center'}>{this.props.title}</Header>
+        <Header as='h2' textAlign={'center'}>
+          {this.props.title}
+        </Header>
         <Form
           handleSubmit={this.handleSubmit}
         />
@@ -28,7 +29,6 @@ class Add extends React.Component{
 
 const mapStateToProps = ({ addStore }) => ({
   title: addStore.title,
-  storeSlug: addStore.slug
 });
 const mapDispatchToProps = (dispatch) => ({
   addStore: () => dispatch(addStore()),
